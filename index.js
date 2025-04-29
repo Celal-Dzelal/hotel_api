@@ -28,7 +28,7 @@ app.use(express.json());
 
 app.use(require("./src/middlewares/logger"));
 
-//* Authentication
+//* Authentication gelecek
 
 app.use(require("./src/middlewares/queryHandler"));
 
