@@ -5,8 +5,8 @@ const Room = require("../models/room");
 module.exports = {
   list: async (req, res) => {
     /* 
-        #swagger.tags = ['Users']
-        #swagger.summary = 'List Users'
+        #swagger.tags = ['Rooms']
+        #swagger.summary = 'List Rooms'
         #swagger.desription = `
             You can send query with endpoint for filter[], search[], sort[], page and limit.
             <ul> Examples usage:
@@ -29,16 +29,6 @@ module.exports = {
         #swagger.tags = ['Rooms']
         #swagger.summary = 'Create Room'
     */
-    if (
-      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/.test(
-        req.body.password
-      )
-    ) {
-      res.errorStatusCode = 401;
-      throw new Error(
-        "Password must be at least 8 characters long, and include at least one lowercase letter, one uppercase letter, one digit, and one special character (e.g., @$!%*?&)"
-      );
-    }
     const result = await Room.create(req.body);
     res.status(200).send({
       error: false,
@@ -59,7 +49,6 @@ module.exports = {
         #swagger.summary = 'Update Room'
     */
     const result = await Room.findByIdAndUpdate(req.params.id, req.body, {
-      runValidators: true,
       new: true,
     });
     res.status(202).send({
