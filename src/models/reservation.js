@@ -19,12 +19,12 @@ const ReservationSchema = new mongoose.Schema(
     arrivalDate: {
       type: Date,
       required: true,
-      default: Date.now(),
+      default: () => new Date(),
     },
     departureDate: {
       type: Date,
       required: true,
-      default: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      default: () => new Date(Date.now() + 24 * 60 * 60 * 1000),
     },
     guestNumber: {
       type: Number,
@@ -33,7 +33,7 @@ const ReservationSchema = new mongoose.Schema(
     },
     night: {
       type: Number,
-      default: () => {
+      default: (departureDate, arrivalDate) => {
         (departureDate - arrivalDate) / (1000 * 60 * 60 * 24);
       },
     },
@@ -42,3 +42,7 @@ const ReservationSchema = new mongoose.Schema(
 );
 
 module.exports = mongoose.model("Reservation", ReservationSchema);
+
+// 681117eab505a6f46b2cce82
+
+// 68111c629d9bd3f74471d2d8
