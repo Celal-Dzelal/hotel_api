@@ -33,16 +33,23 @@ const ReservationSchema = new mongoose.Schema(
     },
     night: {
       type: Number,
-      default: (departureDate, arrivalDate) => {
-        (departureDate - arrivalDate) / (1000 * 60 * 60 * 24);
+      default: function () {
+        return (
+          Math.round(this.departureDate - this.arrivalDate) /
+          (1000 * 60 * 60 * 24)
+        );
       },
     },
   },
   { collection: "Reservations", timestamps: true }
 );
 
+ReservationSchema.set("toJSON", {
+  transform: (doc, ret) => {
+    ret.arrivalDate = ret.arrivalDate.toLocaleDateString("tr-tr");
+    ret.departureDate = ret.departureDate.toLocaleDateString("tr-tr");
+    return ret;
+  },
+});
+
 module.exports = mongoose.model("Reservation", ReservationSchema);
-
-// 681117eab505a6f46b2cce82
-
-// 68111c629d9bd3f74471d2d8
