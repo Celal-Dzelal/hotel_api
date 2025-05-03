@@ -40,6 +40,16 @@ const ReservationSchema = new mongoose.Schema(
         );
       },
     },
+    price: {
+      type: Number,
+      default: 500,
+    },
+    totalPrice: {
+      type: Number,
+      default: function () {
+        return this.price * this.night;
+      },
+    },
   },
   { collection: "Reservations", timestamps: true }
 );
